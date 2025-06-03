@@ -1,0 +1,9 @@
+{
+  "top_text": "Insights from your data.",
+  "title": "Statistical Modelling",
+  "description": "Learn how to use statistical modelling methods such as linear and logistic regression, and survival analysis to understand complex systems within your data.",
+  "suitability": "Requires some programming and mathematical skills.",
+  "guides": [
+    "test_1"
+  ]
+}

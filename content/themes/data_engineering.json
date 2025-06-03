@@ -1,0 +1,9 @@
+{
+  "top_text": "Make your data flow.",
+  "title": "Data Engineering",
+  "description": "Understand how modern data solutions such as databased and APIs can be leveraged to make data analysis and access easier for all. ",
+  "suitability": "Requires some programming skills.",
+  "guides": [
+    "test_1"
+  ]
+}

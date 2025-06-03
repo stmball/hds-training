@@ -1,25 +1,35 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/reference/config-files/gatsby-node/
- */
-
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require(`path`);
+const fs = require(`fs`);
+const { createFilePath } = require(`gatsby-source-filesystem`);
 
 // Define the template for blog post
-const blogPost = path.resolve(`./src/templates/blog-post.js`)
+const guideTemplate = path.resolve(`./src/templates/guide-template.js`)
+const themeTemplate = path.resolve(`./src/templates/theme-template.js`)
 
-/**
- * @type {import('gatsby').GatsbyNode['createPages']}
- */
-exports.createPages = async ({ graphql, actions, reporter }) => {
+const slugify = (text) => {
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
+
+exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
-  // Get all markdown blog posts sorted by date
+  // First, create the guides
   const result = await graphql(`
     {
-      allMarkdownRemark(sort: { frontmatter: { date: ASC } }, limit: 1000) {
+      allMarkdownRemark {
+        nodes {
+          id
+          fields {
+            slug
+          }
+        }
+      }
+      allTheme {
         nodes {
           id
           fields {
@@ -30,46 +40,49 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
   `)
 
-  if (result.errors) {
-    reporter.panicOnBuild(
-      `There was an error loading your blog posts`,
-      result.errors
-    )
-    return
-  }
+  const guides = result.data.allMarkdownRemark.nodes
 
-  const posts = result.data.allMarkdownRemark.nodes
-
-  // Create blog posts pages
-  // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-  // `context` is available in the template as a prop and as a variable in GraphQL
-
-  if (posts.length > 0) {
-    posts.forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
-
-      createPage({
-        path: post.fields.slug,
-        component: blogPost,
-        context: {
-          id: post.id,
-          previousPostId,
-          nextPostId,
-        },
-      })
+  guides.forEach((guide) => {
+    createPage({
+      path: guide.fields.slug,
+      component: guideTemplate,
+      context: {
+        id: guide.id,
+      },
     })
-  }
+  })
+
+  // Then, create the themes 
+  const themes = result.data.allTheme.nodes
+
+  themes.forEach((theme) => {
+    createPage({
+      path: theme.fields.slug,
+      component: themeTemplate,
+      context: {
+        id: theme.id,
+      },
+    })
+  })
+
+
 }
 
-/**
- * @type {import('gatsby').GatsbyNode['onCreateNode']}
- */
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    const value = `guides${createFilePath({ node, getNode })}`
+
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
+  }
+
+  if (node.internal.type === `Theme`) {
+    const value = node.slug;
 
     createNodeField({
       name: `slug`,
@@ -79,9 +92,45 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 }
 
-/**
- * @type {import('gatsby').GatsbyNode['createSchemaCustomization']}
- */
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+
+  const { createNode } = actions
+
+  const themeDir = path.resolve(__dirname, "content/themes")
+
+  fs.readdir(themeDir, (err, files) => {
+    if (err) {
+      throw err;
+    }
+
+    files.forEach((file) => {
+      const filePath = path.join(themeDir, file);
+
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const jsonData = JSON.parse(fileContents);
+
+      const nodeId = createNodeId(`json-${file}`);
+      const nodeContent = JSON.stringify(jsonData);
+
+      const nodeData = {
+        ...jsonData,
+        id: nodeId,
+        slug: slugify(file.slice(0, -4)),
+        internal: {
+          type: 'Theme',
+          content: nodeContent,
+          contentDigest: createContentDigest(jsonData),
+        }
+      }
+
+      createNode(nodeData)
+    })
+
+  })
+
+
+}
+
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
 
@@ -93,18 +142,7 @@ exports.createSchemaCustomization = ({ actions }) => {
   // blog posts are stored inside "content/blog" instead of returning an error
   createTypes(`
     type SiteSiteMetadata {
-      author: Author
       siteUrl: String
-      social: Social
-    }
-
-    type Author {
-      name: String
-      summary: String
-    }
-
-    type Social {
-      twitter: String
     }
 
     type MarkdownRemark implements Node {
@@ -116,10 +154,28 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
+      icons: [String]
     }
 
     type Fields {
       slug: String
+    }
+
+    type Theme implements Node {
+      top_text: String
+      title: String
+      hero: Boolean
+      description: String 
+      suitability: String 
+      guides: [Guide]
+      followons: [Guide]
+    }
+
+    type Guide {
+      title: String 
+      description: String 
+      slug: String
+      icons: [String]
     }
   `)
 }

@@ -1,0 +1,46 @@
+{
+  "top_text": "Unsure where to begin?",
+  "title": "Data Quickstart",
+  "hero": true,
+  "description": "Gain practical programming skills to boost productivity and learn how data science skills like AI could be used to solve real-world health challenges.",
+  "suitability": "For all levels.",
+  "guides": [
+    {
+      "title": "Introduction to Health Data Science",
+      "description": "This session provides a foundational overview of health data science, exploring its significance in modern healthcare. Participants will learn about the various types of health data, including electronic health records (EHRs), genomic data, and wearable device data. The session covers the basics of data collection, storage, and management, as well as the ethical considerations and regulatory frameworks governing health data. Through case studies, participants will understand the impact of data science on improving patient outcomes, optimizing healthcare delivery, and advancing medical research. The session also introduces key tools and technologies used in health data science, setting the stage for more advanced topics in subsequent sessions.",
+      "slug": "hds_intro"
+    },
+    {
+      "title": "Programming for Productivity 1",
+      "description": "This session introduces the essential programming skills needed for health data science, with a focus on how Python can simplify and enhance daily tasks. Participants will learn the basics of Python, one of the most versatile and widely used programming languages in data science. The session covers fundamental syntax, data structures, and control flow, emphasizing how these concepts can be applied to automate repetitive tasks and streamline workflows. Participants will explore popular libraries such as NumPy and Pandas, which are powerful tools for data manipulation and analysis. Through hands-on exercises, participants will gain practical experience in importing, cleaning, and analyzing health datasets, discovering how Python can make data management more efficient and less error-prone. By the end of the session, participants will have a solid foundation in programming and be prepared for more advanced topics in Part 2, equipped with the knowledge to leverage Python to make their lives easier.",
+      "slug": "programming_for_productivity_1"
+    },
+    {
+      "title": "Programming for Productivity 2",
+      "description": "Building on the skills acquired in Part 1, this session delves deeper into advanced programming techniques for health data science, highlighting how Python can be used to solve complex problems and enhance productivity. Participants will learn about object-oriented programming, functional programming, and best practices for writing maintainable and scalable code. The session covers advanced data structures, algorithms, and techniques for optimizing code performance, demonstrating how these concepts can be applied to real-world health data science problems. Participants will also be introduced to version control systems like Git, which are essential for collaborative programming projects and can greatly simplify team workflows. Hands-on exercises will focus on practical applications, such as processing large datasets and implementing machine learning algorithms, showcasing how Python can automate and simplify complex tasks. By the end of the session, participants will have the programming skills needed to tackle challenging health data science projects and leverage Python to make their lives easier.",
+      "slug": "programming_for_productivity_2"
+    },
+    {
+      "title": "Statistics and Survival Analysis",
+      "description": "This session provides a comprehensive introduction to statistical methods and survival analysis in health data science. Participants will learn about descriptive and inferential statistics, including measures of central tendency, dispersion, and statistical inference techniques such as hypothesis testing and confidence intervals. The session covers the fundamentals of survival analysis, including Kaplan-Meier curves, log-rank tests, and Cox proportional hazards models. Participants will gain practical experience in applying these methods to real-world health datasets using statistical software such as R and Python. By the end of the session, participants will be able to analyze and interpret health data, draw meaningful conclusions, and make data-driven decisions.",
+      "slug": "stats_and_survival_analysis"
+    },
+    {
+      "title": " Longitudinal Analysis and Data Engineering",
+      "description": "This session focuses on the analysis of longitudinal data and the principles of data engineering in health data science. Participants will learn about the unique challenges and opportunities associated with longitudinal data, including handling missing data, managing time-varying covariates, and modeling repeated measures. The session covers advanced statistical methods for longitudinal analysis, such as mixed-effects models and generalized estimating equations. Participants will also be introduced to data engineering concepts, including data pipelines, ETL (Extract, Transform, Load) processes, and data warehousing. Hands-on exercises will provide practical experience in designing and implementing data engineering solutions for health data. By the end of the session, participants will have the skills needed to analyze longitudinal data and build robust data engineering systems.",
+      "slug": "longitudinal_analysis_and_de"
+    },
+    {
+      "title": "Machine Learning and Health Economics",
+      "description": "This session explores the application of machine learning and health economics in health data science. Participants will learn about the fundamentals of machine learning, including supervised and unsupervised learning, model evaluation, and feature selection. The session covers advanced machine learning techniques, such as deep learning and natural language processing, and their applications in healthcare. Participants will also be introduced to health economics, including cost-effectiveness analysis, decision modeling, and health technology assessment. Hands-on exercises will focus on applying machine learning algorithms to health datasets and conducting health economic evaluations. By the end of the session, participants will have a comprehensive understanding of how machine learning and health economics can be used to improve healthcare delivery and outcomes.",
+      "slug": "ml_health_economics"
+    }
+  ],
+  "followons": [
+    {
+      "title": "CPD Course in Python",
+      "description": "An introduction to the Python programming language.",
+      "slug": "aaa"
+    }
+  ]
+}
