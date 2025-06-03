@@ -2,12 +2,21 @@ import * as React from "react"
 
 import Navbar from "./Navbar.jsx"
 import AuthenticationWindow from "./AuthenticationWindow.jsx"
-import { useLocalStorage } from "@uidotdev/usehooks";
 
 const Layout = ({ children }) => {
 
-  const [isAuthed, setAuth] = useLocalStorage("logged_in", false)
+  const [isAuthed, setAuth] = React.useState(false)
 
+  React.useEffect(() => {
+    if (localStorage.getItem("logged_in")) {
+      setAuth(true)
+    }
+  })
+
+  const save_auth = () => {
+    localStorage.setItem("logged_in", true)
+    setAuth(true)
+  }
 
   return (
     <>
@@ -21,7 +30,7 @@ const Layout = ({ children }) => {
           </div >
         </>
         :
-        <AuthenticationWindow setAuth={setAuth} />
+        <AuthenticationWindow save_auth={save_auth} />
       }
     </>
   )

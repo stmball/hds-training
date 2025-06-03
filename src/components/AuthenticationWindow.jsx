@@ -1,6 +1,6 @@
 import * as React from "react"
 
-const AuthenticationWindow = ({ setAuth }) => {
+const AuthenticationWindow = ({ save_auth }) => {
 
   const [passwordInput, setPasswordInput] = React.useState('')
   const [incorrectPassword, setIncorrectPassword] = React.useState(false)
@@ -21,7 +21,7 @@ const AuthenticationWindow = ({ setAuth }) => {
 
     // daa_tr41n1ng
     if (hashHex === "1223daab298442c78b3cfdb79a2c2dbce6e927b7147b0201b80cdf6455bfbab5") {
-      setAuth(true)
+      save_auth()
     } else {
       setIncorrectPassword(true)
     }
