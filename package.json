@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fontsource/poppins": "^5.2.5",
+    "@uidotdev/usehooks": "^2.4.1",
     "gatsby": "^5.14.1",
     "gatsby-plugin-feed": "^5.14.0",
     "gatsby-plugin-image": "^3.14.0",

@@ -2,10 +2,11 @@ import * as React from "react"
 
 import Navbar from "./Navbar.jsx"
 import AuthenticationWindow from "./AuthenticationWindow.jsx"
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 const Layout = ({ children }) => {
 
-  const [isAuthed, setAuth] = React.useState(false)
+  const [isAuthed, setAuth] = useLocalStorage("logged_in", false)
 
 
   return (
